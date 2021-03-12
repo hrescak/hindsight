@@ -1,16 +1,8 @@
-import App from "next/app"
-import { ThemeProvider } from "styled-components"
-import theme from "../components/theme"
-import { BaseStyles } from "../components/base"
+import { AppProps } from 'next/app'
+import 'tailwindcss/tailwind.css'
 
-export default class MyApp extends App {
-  render() {
-    const { Component, pageProps } = this.props
-    return (
-      <ThemeProvider theme={theme}>
-        <BaseStyles />
-        <Component {...pageProps} />
-      </ThemeProvider>
-    )
-  }
-}
+  const MyApp = ({ Component, pageProps }:AppProps) => (
+    <Component {...pageProps} />
+  )
+
+  export default MyApp
