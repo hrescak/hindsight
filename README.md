@@ -1,9 +1,3 @@
-# Next.js + Typescript + Styled starter
+# Hindsight.supply
 
-Decided to whip one up after piecing stuff together for the 10th time from five different places.
-- Next.js
-- Typescript
-- styled-components
-- theming
-- meta / head info
-- normalize.css
+More of a kitchen than a showroom. Ambition to be both.
