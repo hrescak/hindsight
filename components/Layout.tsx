@@ -4,9 +4,9 @@ import Head from "next/head";
 type Props = {
   title?: string;
 };
-const URL = "https://url.site";
-const DESC = "this is the website description";
-const TITLE = "this is the website title";
+const URL = "https://hindsight.supply";
+const DESC = "More of a kitchen than a showroom";
+const TITLE = "Hindsight Supply";
 
 const Layout: React.FunctionComponent<Props> = ({
   children,
@@ -30,7 +30,6 @@ const Layout: React.FunctionComponent<Props> = ({
       <meta name="og:locale" content="en_US" />
       <meta name="og:site_name" content={TITLE} />
       <link rel="icon" href="/meta/icon.png" />
-      <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
     </Head>
     {children}
   </div>
