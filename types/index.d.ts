@@ -1,12 +1,12 @@
 
 export interface UpdateData {
   title: string, 
-  publishedAt: string
+  publishedAt: string | Date
 }
 
 export interface Update {
   content: string,
-  data: PostData,
+  data: UpdateData,
   filePath: string;
 }
 

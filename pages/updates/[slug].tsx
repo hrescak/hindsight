@@ -1,6 +1,5 @@
-import matter from "gray-matter";
 import { GetStaticProps } from "next";
-import dynamic from "next/dynamic";
+// import dynamic from "next/dynamic";
 import Link from "next/link";
 import hydrate from "next-mdx-remote/hydrate";
 import renderToString from "next-mdx-remote/render-to-string";
@@ -8,8 +7,8 @@ import { MdxRemote } from "next-mdx-remote/types";
 import { UpdateData } from "../../types";
 import Head from "next/head";
 import Layout from "../../components/Layout";
-import { postFileContents, postFileSlugs } from "../../utils/mdxUtils";
 import { P, A, UL, Image } from "../../components/content";
+import useUpdates from "../../hooks/useUpdates";
 
 // Custom components/renderers to pass to MDX.
 // Since the MDX files aren't loaded by webpack, they have no knowledge of how
@@ -55,17 +54,12 @@ export default function PostPage({ source, frontMatter }: PostPageProps) {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const { content, data } = matter(postFileContents(params && params.slug));
-  // Convert post date to format: Month day, Year
-  const options = { year: "numeric", month: "long", day: "numeric" };
-  const formattedDate = data.publishedAt.toLocaleDateString("en-US", options);
-  const frontmatter = { ...data, publishedAt: formattedDate };
-
-  const mdxSource = await renderToString(content, {
+  const { getUpdateContents } = useUpdates();
+  const { content, frontmatter } = getUpdateContents(params && params.slug);
+  const mdxSource = await renderToString(content!, {
     components,
     scope: frontmatter,
   });
-
   return {
     props: {
       source: mdxSource,
@@ -75,8 +69,9 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 };
 
 export const getStaticPaths = async () => {
+  const { updateFileSlugs } = useUpdates();
   return {
-    paths: postFileSlugs,
+    paths: updateFileSlugs,
     fallback: false,
   };
 };
