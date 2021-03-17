@@ -9,7 +9,7 @@ import { UpdateData } from "../../types";
 import Head from "next/head";
 import Layout from "../../components/Layout";
 import { postFileContents, postFileSlugs } from "../../utils/mdxUtils";
-import { P, A } from "../../components/Typography";
+import { P, A, UL, Image } from "../../components/content";
 
 // Custom components/renderers to pass to MDX.
 // Since the MDX files aren't loaded by webpack, they have no knowledge of how
@@ -21,6 +21,8 @@ const components: MdxRemote.Components = {
   // See the notes in README.md for more details.
   a: A,
   p: P,
+  ul: UL,
+  img: Image,
   //TestComponent: dynamic(() => import("../../components/TestComponent")),
   Head,
 };
