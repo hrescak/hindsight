@@ -14,7 +14,7 @@ export default function Index({ updates }: IndexProps) {
       <h2 className="text-xl mt-8 mb-2 font-semibold">Updates</h2>
       <ul>
         {updates.map((update) => (
-          <li key={update.filePath}>
+          <li key={update.filePath} className="mb-2">
             <Link
               as={`/updates/${update.filePath.replace(/\.mdx?$/, "")}`}
               href={`/updates/[slug]`}
