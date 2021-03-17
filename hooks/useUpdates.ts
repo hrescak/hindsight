@@ -1,6 +1,7 @@
 import fs from "fs";
 import matter from "gray-matter";
 import path from "path";
+import { Update, UpdateData } from "../types";
 
 const useUpdates = () => {
 
@@ -22,14 +23,14 @@ const useUpdates = () => {
   const updateFileMetas = updateFilePaths
     .map((filePath) => {
       const source = fs.readFileSync(path.join(UPDATES_PATH, filePath));
-      const { data } = matter(source);
+      const data = matter(source).data as UpdateData
       return {
         data,
         filePath,
       };
     })
     // sort the files by date published
-    .sort((a, b) => b.data.publishedAt - a.data.publishedAt)
+    .sort((a, b) => (new Date(b.data.publishedAt)).valueOf() - (new Date(a.data.publishedAt)).valueOf())
     // stringify dates afterwards
     .map((file) => {
       return {
@@ -45,8 +46,9 @@ const useUpdates = () => {
     const fileContent = fs.readFileSync(filePath);
 
     // load ftontmatter
-    const { content, data } = matter(fileContent);
-    const frontmatter = stringifyDate(data)
+    const { content, data} = matter(fileContent)
+    const typedData = data as UpdateData
+    const frontmatter = stringifyDate(typedData)
     
     return { content, frontmatter }
   }
@@ -57,8 +59,8 @@ const useUpdates = () => {
 export default useUpdates
 
 // Convert post date to format: Month day, Year
-const stringifyDate = (frontmatter:any) => {
-  const options = { year: "numeric", month: "long", day: "numeric" };
-  const formattedDate = frontmatter.publishedAt.toLocaleDateString("en-US", options);
+const stringifyDate = (frontmatter:UpdateData) => {
+  const options = { year: "numeric", month: "long", day: "numeric" } as Intl.DateTimeFormatOptions;
+  const formattedDate = new Date(frontmatter.publishedAt).toLocaleDateString("en-US", options);
   return { ...frontmatter, publishedAt: formattedDate };
 }
