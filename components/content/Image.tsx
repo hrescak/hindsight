@@ -2,15 +2,17 @@ import React from "react";
 import NextImage, { ImageProps } from "next/image";
 
 export const Image: React.FC<ImageProps> = (props) => {
-  const w = props.width || 640;
-  const h = props.height || 285;
+  const w = props.width || 896;
+  const h = props.height || 490;
   return (
-    <NextImage
-      className="rounded md:rounded-lg"
-      {...props}
-      width={w}
-      height={h}
-      layout="intrinsic"
-    />
+    <div className="lg:-mx-16 rounded md:rounded-lg bg-gray-100 overflow-hidden leading-3">
+      <NextImage
+        {...props}
+        width={w}
+        height={h}
+        layout="intrinsic"
+        quality={95}
+      />
+    </div>
   );
 };
