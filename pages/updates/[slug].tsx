@@ -7,7 +7,7 @@ import { MdxRemote } from "next-mdx-remote/types";
 import { UpdateData } from "../../types";
 import Head from "next/head";
 import Layout from "../../components/Layout";
-import { P, A, UL, Image } from "../../components/content";
+import { A, Image } from "../../components/content";
 import useUpdates from "../../hooks/useUpdates";
 
 // Custom components/renderers to pass to MDX.
@@ -19,8 +19,6 @@ const components: MdxRemote.Components = {
   // useful for conditionally loading components for certain routes.
   // See the notes in README.md for more details.
   a: A,
-  p: P,
-  ul: UL,
   img: Image,
   //TestComponent: dynamic(() => import("../../components/TestComponent")),
   Head,
@@ -48,7 +46,7 @@ export default function PostPage({ source, frontMatter }: PostPageProps) {
           <p className="text-gray-400 mb-4">{frontMatter.publishedAt}</p>
         )}
       </div>
-      <main>{content}</main>
+      <main className="mdx-content">{content}</main>
     </Layout>
   );
 }

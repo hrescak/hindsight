@@ -1,0 +1,11 @@
+/* ./styles/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.mdx-content p {
+  @apply my-6;
+}
+.mdx-content ul {
+  @apply my-6 list-disc ml-5;
+}
