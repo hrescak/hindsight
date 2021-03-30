@@ -1,5 +1,4 @@
 import { GetStaticProps } from "next";
-// import dynamic from "next/dynamic";
 import Link from "next/link";
 import hydrate from "next-mdx-remote/hydrate";
 import renderToString from "next-mdx-remote/render-to-string";
@@ -9,6 +8,7 @@ import Head from "next/head";
 import Layout from "../../components/Layout";
 import { A, Image } from "../../components/content";
 import useUpdates from "../../hooks/useUpdates";
+import LinkList from "../../components/LinkList";
 
 // Custom components/renderers to pass to MDX.
 // Since the MDX files aren't loaded by webpack, they have no knowledge of how
@@ -20,7 +20,7 @@ const components: MdxRemote.Components = {
   // See the notes in README.md for more details.
   a: A,
   img: Image,
-  //TestComponent: dynamic(() => import("../../components/TestComponent")),
+  LinkList: LinkList,
   Head,
 };
 
@@ -55,7 +55,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { getUpdateContents } = useUpdates();
   const { content, frontmatter } = getUpdateContents(params && params.slug);
   const mdxSource = await renderToString(content!, {
-    components,
+    components: components,
     scope: frontmatter,
   });
   return {

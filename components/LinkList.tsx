@@ -16,7 +16,7 @@ const LinkList: React.FC<LinkListProps> = ({ links }) => {
   return (
     <div>
       {links.map((link) => (
-        <div key={link.title}></div>
+        <div key={link.title}>{link.title}</div>
       ))}
     </div>
   );
