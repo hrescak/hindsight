@@ -16,7 +16,16 @@ const LinkList: React.FC<LinkListProps> = ({ links }) => {
   return (
     <div>
       {links.map((link) => (
-        <div key={link.title}>{link.title}</div>
+        <a
+          href={link.URL}
+          key={link.title}
+          className="flex flex-col flex-grow pt-2 pl-3 -ml-3 pr-3 -mr-3 hover:bg-gray-100 rounded"
+        >
+          <span className="flex font-semibold">{link.title}</span>
+          <span className="flex text-gray-500 text-sm pb-2 border-gray-100 border-b">
+            {link.description}
+          </span>
+        </a>
       ))}
     </div>
   );

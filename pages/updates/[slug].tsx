@@ -41,7 +41,7 @@ export default function PostPage({ source, frontMatter }: PostPageProps) {
         </nav>
       </header>
       <div>
-        <h1 className="text-3xl font-semibold">{frontMatter.title}</h1>
+        <h1 className="text-4xl font-semibold">{frontMatter.title}</h1>
         {frontMatter.publishedAt && (
           <p className="text-gray-400 mb-4">{frontMatter.publishedAt}</p>
         )}

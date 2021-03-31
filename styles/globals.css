@@ -9,3 +9,10 @@
 .mdx-content ul {
   @apply my-6 list-disc ml-5;
 }
+.mdx-content h2 {
+  @apply text-3xl font-semibold mt-8 mb-3;
+}
+
+.mdx-content h3 {
+  @apply text-2xl font-semibold mt-8 mb-3;
+}
