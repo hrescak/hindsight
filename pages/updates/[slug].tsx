@@ -5,12 +5,16 @@ import Layout from "../../components/Layout";
 import { getAllPosts } from "../index";
 import dayjs from "dayjs";
 
-export async function getStaticProps({ params: { slug } }) {
+export async function getStaticProps({
+  params: { slug },
+}: {
+  params: { slug: String };
+}) {
   // Get all posts again
   const posts = await getAllPosts();
 
   // Find the current blogpost by slug
-  const post = posts.find((t) => t.slug === slug);
+  const post = posts.find((t: any) => t.slug === slug);
 
   const blocks = await fetch(
     `https://notion-api.hindsight.workers.dev/v1/page/${post.id}`
@@ -27,12 +31,12 @@ export async function getStaticProps({ params: { slug } }) {
 export async function getStaticPaths() {
   const posts = await getAllPosts();
   return {
-    paths: posts.map((post) => ({ params: { slug: post.slug } })),
+    paths: posts.map((post: any) => ({ params: { slug: post.slug } })),
     fallback: false,
   };
 }
 
-export default ({ post, blocks }) => (
+export default ({ post, blocks }: { post: any; blocks: any }) => (
   <Layout>
     <header className="mb-8">
       <nav>
