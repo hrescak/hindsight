@@ -1,75 +1,56 @@
-import { GetStaticProps } from "next";
-// import dynamic from "next/dynamic";
+import "react-notion/src/styles.css";
+import { NotionRenderer } from "react-notion";
 import Link from "next/link";
-import hydrate from "next-mdx-remote/hydrate";
-import renderToString from "next-mdx-remote/render-to-string";
-import { MdxRemote } from "next-mdx-remote/types";
-import { UpdateData } from "../../types";
-import Head from "next/head";
 import Layout from "../../components/Layout";
-import { A, Image } from "../../components/content";
-import useUpdates from "../../hooks/useUpdates";
+import { getAllPosts } from "../index";
+import dayjs from "dayjs";
 
-// Custom components/renderers to pass to MDX.
-// Since the MDX files aren't loaded by webpack, they have no knowledge of how
-// to handle import statements. Instead, you must include components in scope
-// here.
-const components: MdxRemote.Components = {
-  // It also works with dynamically-imported components, which is especially
-  // useful for conditionally loading components for certain routes.
-  // See the notes in README.md for more details.
-  a: A,
-  img: Image,
-  //TestComponent: dynamic(() => import("../../components/TestComponent")),
-  Head,
-};
+export async function getStaticProps({
+  params: { slug },
+}: {
+  params: { slug: String };
+}) {
+  // Get all posts again
+  const posts = await getAllPosts();
 
-interface PostPageProps {
-  source: MdxRemote.Source;
-  frontMatter: UpdateData;
-}
+  // Find the current blogpost by slug
+  const post = posts.find((t: any) => t.slug === slug);
 
-export default function PostPage({ source, frontMatter }: PostPageProps) {
-  const content = hydrate(source, { components });
-  return (
-    <Layout>
-      <header className="mb-8">
-        <nav>
-          <Link href="/">
-            <a>&#8592; Go back home</a>
-          </Link>
-        </nav>
-      </header>
-      <div>
-        <h1 className="text-3xl font-semibold">{frontMatter.title}</h1>
-        {frontMatter.publishedAt && (
-          <p className="text-gray-400 mb-4">{frontMatter.publishedAt}</p>
-        )}
-      </div>
-      <main className="mdx-content">{content}</main>
-    </Layout>
-  );
-}
+  const blocks = await fetch(
+    `https://notion-api.hindsight.workers.dev/v1/page/${post.id}`
+  ).then((res) => res.json());
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const { getUpdateContents } = useUpdates();
-  const { content, frontmatter } = getUpdateContents(params && params.slug);
-  const mdxSource = await renderToString(content!, {
-    components,
-    scope: frontmatter,
-  });
   return {
     props: {
-      source: mdxSource,
-      frontMatter: frontmatter,
+      blocks,
+      post,
     },
   };
-};
+}
 
-export const getStaticPaths = async () => {
-  const { updateFileSlugs } = useUpdates();
+export async function getStaticPaths() {
+  const posts = await getAllPosts();
   return {
-    paths: updateFileSlugs,
+    paths: posts.map((post: any) => ({ params: { slug: post.slug } })),
     fallback: false,
   };
-};
+}
+
+export default ({ post, blocks }: { post: any; blocks: any }) => (
+  <Layout>
+    <header className="mb-8">
+      <nav>
+        <Link href="/">
+          <a>&#8592; Go back home</a>
+        </Link>
+      </nav>
+    </header>
+    <div>
+      <h1 className="text-3xl font-semibold">{post.title}</h1>
+      <p className="text-gray-400 mb-4">
+        {dayjs(post.publishedAt).format("MMMM D, YYYY")}
+      </p>
+    </div>
+    <NotionRenderer blockMap={blocks} />
+  </Layout>
+);

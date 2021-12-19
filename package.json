@@ -8,12 +8,11 @@
     "start": "next start"
   },
   "dependencies": {
-    "gray-matter": "^4.0.2",
+    "dayjs": "^1.10.7",
     "next": "latest",
-    "next-mdx-remote": "^2.0.0",
-    "next-remote-watch": "0.2.0",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "react-notion": "^0.10.0"
   },
   "license": "MIT",
   "devDependencies": {
