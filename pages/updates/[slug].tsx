@@ -3,6 +3,7 @@ import { NotionRenderer } from "react-notion";
 import Link from "next/link";
 import Layout from "../../components/Layout";
 import { getAllPosts } from "../index";
+import dayjs from "dayjs";
 
 export async function getStaticProps({ params: { slug } }) {
   // Get all posts again
@@ -42,7 +43,9 @@ export default ({ post, blocks }) => (
     </header>
     <div>
       <h1 className="text-3xl font-semibold">{post.title}</h1>
-      <p className="text-gray-400 mb-4">two days ago</p>
+      <p className="text-gray-400 mb-4">
+        {dayjs(post.publishedAt).format("MMMM D, YYYY")}
+      </p>
     </div>
     <NotionRenderer blockMap={blocks} />
   </Layout>
