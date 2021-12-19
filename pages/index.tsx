@@ -35,7 +35,7 @@ function HomePage({ posts }: { posts: any }) {
       <ul>
         {posts.map((post: any, idx: number) => (
           <li key={idx} className="mb-2">
-            <Link href="updates/[slug]" as={`/updates/${post.slug}`}>
+            <Link href="posts/[slug]" as={`/posts/${post.slug}`}>
               <a>{post.title}</a>
             </Link>
             <br />
