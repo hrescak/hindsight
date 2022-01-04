@@ -38,10 +38,10 @@ export async function getStaticPaths() {
 
 export default ({ post, blocks }: { post: any; blocks: any }) => (
   <Layout>
-    <header className="mb-8">
+    <header className="mt-4 mb-8">
       <nav>
         <Link href="/">
-          <a>&#8592; Go back home</a>
+          <a>&#8592; Back</a>
         </Link>
       </nav>
     </header>

@@ -29,8 +29,12 @@ export async function getStaticProps() {
 function HomePage({ posts }: { posts: any }) {
   return (
     <Layout>
-      <h1 className="text-3xl font-semibold">Hindsight Supply</h1>
-      <p className="text-gray-500">More of a kitchen than a showroom.</p>
+      <div className="w-full flex h-20 items-center">
+        <img src="/img/logo.svg" alt="Hindsight Supply" />
+        <p className=" text-gray-400 text-sm leading-5 ml-4 hidden sm:block">
+          More of a kitchen <br /> than a showroom.
+        </p>
+      </div>
       <h2 className="text-xl mt-8 mb-2 font-semibold">Posts</h2>
       <ul>
         {posts.map((post: any, idx: number) => (

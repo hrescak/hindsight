@@ -12,7 +12,7 @@ const Layout: React.FunctionComponent<Props> = ({
   children,
   title = TITLE,
 }) => (
-  <div className="container mx-auto p-4 md:p-8 lg:p-16 max-w-4xl">
+  <div className="container mx-auto p-4 md:px-8 lg:px-16 max-w-4xl">
     <Head>
       <title>{title}</title>
       <meta charSet="utf-8" />
